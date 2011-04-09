@@ -470,7 +470,7 @@ void process_gcode_command() {
 				if ( ! next_target.seen_S)
 					break;
 				if ( ! next_target.seen_P)
-					next_target.P = HEATER_EXTRUDER;
+					next_target.P = next_target.target.T;
 				temp_set(next_target.P, next_target.S);
 				if (next_target.S)
 					power_on();
@@ -491,7 +491,7 @@ void process_gcode_command() {
 					queue_wait();
 				#endif
 				if ( ! next_target.seen_P)
-					next_target.P = TEMP_SENSOR_none;
+					next_target.P = next_target.target.T;
 				temp_print(next_target.P);
 				break;
 
