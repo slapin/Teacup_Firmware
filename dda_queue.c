@@ -99,7 +99,11 @@ void queue_step() {
 /// \note this function waits for space to be available if necessary, check queue_full() first if waiting is a problem
 /// This is the only function that modifies mb_head and it always called from outside an interrupt.
 void enqueue(TARGET *t) {
-	enqueue_home(t, 0, 0);
+	#ifdef ACCELERATION_SPLIT
+		split_create(t);
+	#else
+		enqueue_home(t, 0, 0);
+	#endif
 }
 
 void enqueue_home(TARGET *t, uint8_t endstop_check, uint8_t endstop_stop_cond) {
@@ -108,10 +112,12 @@ void enqueue_home(TARGET *t, uint8_t endstop_check, uint8_t endstop_stop_cond) {
 		delay(WAITING_DELAY);
 
 	uint8_t h = mb_head + 1;
+	// Markus: das soll den Zeiger an den Anfang setzen, wenn er über
+	// das Ende hinaus ist, oder? Das funktioniert doch nur fpr SIZE ein exponent von 2!
 	h &= (MOVEBUFFER_SIZE - 1);
 
 	DDA* new_movebuffer = &(movebuffer[h]);
-	
+
 	if (t != NULL) {
 		dda_create(new_movebuffer, t);
 		new_movebuffer->endstop_check = endstop_check;
@@ -120,15 +126,16 @@ void enqueue_home(TARGET *t, uint8_t endstop_check, uint8_t endstop_stop_cond) {
 	else {
 		// it's a wait for temp
 		new_movebuffer->waitfor_temp = 1;
+//Markus: ist nullmove nicht genau falsch gesetzt?
 		new_movebuffer->nullmove = 0;
 	}
 
 	// make certain all writes to global memory
 	// are flushed before modifying mb_head.
 	MEMORY_BARRIER();
-	
+
 	mb_head = h;
-	
+
 	uint8_t save_reg = SREG;
 	cli();
 	CLI_SEI_BUG_MEMORY_BARRIER();
@@ -157,6 +164,8 @@ void next_move() {
 	while ((queue_empty() == 0) && (movebuffer[mb_tail].live == 0)) {
 		// next item
 		uint8_t t = mb_tail + 1;
+	// Markus: das soll den Zeiger an den Anfang setzen, wenn er über
+	// das Ende hinaus ist, oder? Das funktioniert doch nur fpr SIZE ein exponent von 2!
 		t &= (MOVEBUFFER_SIZE - 1);
 		DDA* current_movebuffer = &movebuffer[t];
 		// tail must be set before setTimer call as setTimer
