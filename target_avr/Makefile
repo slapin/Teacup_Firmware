@@ -94,7 +94,29 @@ PROGID = stk500v2
 
 PROGRAM = mendel
 
-SOURCES = $(PROGRAM).c gcode_parse.c gcode_process.c dda.c dda_maths.c dda_queue.c timer.c temp.c sermsg.c watchdog.c debug.c sersendf.c heater.c analog.c intercom.c pinio.c clock.c home.c crc.c delay.c serial.c
+APP = ../app
+
+SOURCES = $(APP)/$(PROGRAM).c \
+	$(APP)/gcode_parse.c \
+	$(APP)/gcode_process.c \
+	$(APP)/dda.c \
+	$(APP)/dda_maths.c \
+	$(APP)/dda_queue.c \
+	$(APP)/timer.c \
+	$(APP)/temp.c \
+	$(APP)/sermsg.c  \
+	$(APP)/watchdog.c \
+	$(APP)/debug.c \
+	$(APP)/sersendf.c \
+	$(APP)/heater.c \
+	$(APP)/analog.c \
+	$(APP)/intercom.c  \
+	$(APP)/pinio.c \
+	$(APP)/clock.c \
+	$(APP)/home.c \
+	$(APP)/crc.c \
+	$(APP)/delay.c  \
+	$(APP)/serial.c
 
 ARCH = avr-
 CC = $(ARCH)gcc
@@ -104,6 +126,7 @@ OBJCOPY = $(ARCH)objcopy
 OPTIMIZE = -Os -ffunction-sections -finline-functions-called-once -mcall-prologues
 # OPTIMIZE = -O0
 CFLAGS = -g -Wall -Wstrict-prototypes $(OPTIMIZE) -mmcu=$(MCU_TARGET) $(DEFS) -std=gnu99 -funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums -save-temps -Winline
+CFLAGS += -I../target_avr
 LDFLAGS = -Wl,--as-needed -Wl,--gc-sections
 LIBS = -lm
 LIBDEPS =
