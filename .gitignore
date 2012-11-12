@@ -12,6 +12,8 @@
 *.i
 *.s
 *~
+*.d
+*.bak
 
 temporal.png
 temporal_data
