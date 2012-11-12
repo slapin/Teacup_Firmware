@@ -5,6 +5,8 @@
 #ifndef	_PINIO_H
 #define	_PINIO_H
 
+#include 	<stdint.h>
+
 #include	"config.h"
 
 /*
@@ -210,5 +212,57 @@ Stepper Enable Pins
 	#define	e_enable()					do { } while (0)
 	#define	e_disable()					do { } while (0)
 #endif
+
+/*
+Internal pullup resistors for endstops
+*/
+static void endstops_on(void) __attribute__ ((always_inline));
+inline void endstops_on(void) {
+	#ifdef USE_INTERNAL_PULLUPS
+		#ifdef X_MIN_PIN
+			WRITE(X_MIN_PIN, 1);
+		#endif
+		#ifdef X_MAX_PIN
+			WRITE(X_MAX_PIN, 1);
+		#endif
+		#ifdef Y_MIN_PIN
+			WRITE(Y_MIN_PIN, 1);
+		#endif
+		#ifdef Y_MAX_PIN
+			WRITE(Y_MAX_PIN, 1);
+		#endif
+		#ifdef Z_MIN_PIN
+			WRITE(Z_MIN_PIN, 1);
+		#endif
+		#ifdef Z_MAX_PIN
+			WRITE(Z_MAX_PIN, 1);
+		#endif
+	#endif
+}
+
+static void endstops_off(void) __attribute__ ((always_inline));
+inline void endstops_off(void) {
+	#ifdef USE_INTERNAL_PULLUPS
+		#ifdef X_MIN_PIN
+			WRITE(X_MIN_PIN, 0);
+		#endif
+		#ifdef X_MAX_PIN
+			WRITE(X_MAX_PIN, 0);
+		#endif
+		#ifdef Y_MIN_PIN
+			WRITE(Y_MIN_PIN, 0);
+		#endif
+		#ifdef Y_MAX_PIN
+			WRITE(Y_MAX_PIN, 0);
+		#endif
+		#ifdef Z_MIN_PIN
+			WRITE(Z_MIN_PIN, 0);
+		#endif
+		#ifdef Z_MAX_PIN
+			WRITE(Z_MAX_PIN, 0);
+		#endif
+	#endif
+}
+
 
 #endif	/* _PINIO_H */

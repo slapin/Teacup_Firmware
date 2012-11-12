@@ -7,7 +7,9 @@
 #include	<string.h>
 #include	<stdlib.h>
 #include	<math.h>
-#include	<avr/interrupt.h>
+//!#include	<avr/interrupt.h>
+
+#include "iofuncs.h"
 
 #include	"dda_maths.h"
 #include	"timer.h"

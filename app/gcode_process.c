@@ -5,15 +5,18 @@
 */
 
 #include	<string.h>
-#include	<avr/interrupt.h>
+//!#include	<avr/interrupt.h>
 
 #include	"gcode_parse.h"
+
+#include "sysfuncs.h"
+#include "iofuncs.h"
 
 #include	"dda.h"
 #include	"dda_queue.h"
 #include	"watchdog.h"
 #include	"delay.h"
-#include	"serial.h"
+#include	"teaserial.h"
 #include	"sermsg.h"
 #include	"temp.h"
 #include	"heater.h"
@@ -155,7 +158,7 @@ void process_gcode_command() {
 				// delay
 				if (next_target.seen_P) {
 					for (;next_target.P > 0;next_target.P--) {
-						clock();
+						app_clock();
 						delay_ms(1);
 					}
 				}

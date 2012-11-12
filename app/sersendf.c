@@ -5,9 +5,11 @@
 */
 
 #include	<stdarg.h>
-#include	<avr/pgmspace.h>
+//#include	<avr/pgmspace.h>
 
-#include	"serial.h"
+#include "pgmspace.h"
+
+#include	"teaserial.h"
 #include	"sermsg.h"
 
 // void sersendf(char *format, ...) {
@@ -94,6 +96,8 @@
 
 	\code sersendf_P(PSTR("X:%ld Y:%ld temp:%u.%d flags:%sx Q%su/%su%c\n"), target.X, target.Y, current_temp >> 2, (current_temp & 3) * 25, dda.allflags, mb_head, mb_tail, (queue_full()?'F':(queue_empty()?'E':' '))) \endcode
 */
+//- #define HAVE_16BIT
+
 void sersendf_P(PGM_P format, ...) {
 	va_list args;
 	va_start(args, format);
@@ -112,29 +116,39 @@ void sersendf_P(PGM_P format, ...) {
 				case 'u':
 					if (j == 4)
 						serwrite_uint32(va_arg(args, uint32_t));
+#ifdef HAVE_16BIT
 					else
 						serwrite_uint16(va_arg(args, uint16_t));
+#endif
 					j = 0;
 					break;
 				case 'd':
 					if (j == 4)
 						serwrite_int32(va_arg(args, int32_t));
+#ifdef HAVE_16BIT
 					else
 						serwrite_int16(va_arg(args, int16_t));
+#endif
 					j = 0;
 					break;
 				case 'c':
+#ifdef HAVE_16BIT
 					serial_writechar(va_arg(args, uint16_t));
+#else
+					serial_writechar(va_arg(args, uint32_t));
+#endif
 					j = 0;
 					break;
 				case 'x':
 					serial_writestr_P(PSTR("0x"));
 					if (j == 4)
 						serwrite_hex32(va_arg(args, uint32_t));
+#ifdef HAVE_16BIT
 					else if (j == 1)
 						serwrite_hex8(va_arg(args, uint16_t));
 					else
 						serwrite_hex16(va_arg(args, uint16_t));
+#endif
 					j = 0;
 					break;
 /*				case 'p':

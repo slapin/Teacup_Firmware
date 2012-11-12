@@ -5,17 +5,20 @@
 */
 
 #include	<string.h>
-#include	<avr/interrupt.h>
+//!#include	<avr/interrupt.h>
+
+#include 	"iofuncs.h"
+#include 	"sysfuncs.h"
 
 #include	"config.h"
 #include	"timer.h"
-#include	"serial.h"
+#include	"teaserial.h"
 #include	"sermsg.h"
 #include	"temp.h"
 #include	"delay.h"
 #include	"sersendf.h"
 #include	"clock.h"
-#include	"memory_barrier.h"
+//!#include	"memory_barrier.h"
 
 /// movebuffer head pointer. Points to the last move in the queue.
 /// this variable is used both in and out of interrupts, but is
@@ -199,5 +202,5 @@ void queue_flush() {
 /// wait for queue to empty
 void queue_wait() {
 	while (queue_empty() == 0)
-		clock();
+		app_clock();
 }

@@ -46,3 +46,9 @@ void _delay_ms(uint32_t delay) {
 	delay_us(delay * 1000);
 	wd_reset();
 }
+
+
+void _delay_loop_2 (uint32_t delay_cycles)
+{
+	//TODO
+}

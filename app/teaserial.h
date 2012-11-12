@@ -2,8 +2,12 @@
 #define	_SERIAL_H
 
 #include	<stdint.h>
+#include	"pgmspace.h"
+
+/*
 #include	<avr/io.h>
 #include	<avr/pgmspace.h>
+*/
 
 #ifdef USE_USB
   #include "usb_serial.h"

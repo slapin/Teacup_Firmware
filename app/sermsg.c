@@ -4,7 +4,7 @@
 	\brief primitives for sending numbers over the serial link
 */
 
-#include	"serial.h"
+#include	"teaserial.h"
 
 /** write a single hex digit
 	\param v hex digit to write, higher nibble ignored

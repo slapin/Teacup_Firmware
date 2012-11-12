@@ -6,7 +6,7 @@
 
 #include	<string.h>
 
-#include	"serial.h"
+#include	"teaserial.h"
 #include	"sermsg.h"
 #include	"dda_queue.h"
 #include	"debug.h"

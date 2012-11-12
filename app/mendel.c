@@ -24,31 +24,47 @@
 			ctrl+d \endcode
 */
 
+#include <stdint.h>
+
+#include "ch.h"
+#include "hal.h" 
+
+#include	"pgmspace.h"
+#include 	"sysfuncs.h"
+
+#include 	"iofuncs.h"
+/*
 #include	<avr/io.h>
 #include	<avr/interrupt.h>
+*/
 
+/*
 #include	"config.h"
 #include	"fuses.h"
 
-#include	"serial.h"
+#include	"sermsg.h"
+#include	"debug.h"
+#include	"sersendf.h"
+#include	"pinio.h"
+#include	"arduino.h"
+#include	"intercom.h"
+*/
 #include	"dda_queue.h"
 #include	"dda.h"
 #include	"gcode_parse.h"
-#include	"timer.h"
-#include	"temp.h"
-#include	"sermsg.h"
-#include	"watchdog.h"
-#include	"debug.h"
-#include	"sersendf.h"
+#include	"clock.h"
+#include	"teaserial.h"
 #include	"heater.h"
 #include	"analog.h"
-#include	"pinio.h"
-#include	"arduino.h"
-#include	"clock.h"
-#include	"intercom.h"
+#include	"temp.h"
+#include	"timer.h"
+#include	"watchdog.h"
+
+
 
 /// initialise all I/O - set pins as input or output, turn off unused subsystems, etc
 void io_init(void) {
+/*
 	// disable modules we don't use
 	#ifdef PRR
 		PRR = MASK(PRTWI) | MASK(PRADC) | MASK(PRSPI);
@@ -64,6 +80,7 @@ void io_init(void) {
 		#endif
 	#endif
 	ACSR = MASK(ACD);
+*/
 
 	// setup I/O pins
 
@@ -207,6 +224,10 @@ void io_init(void) {
 
 /// Startup code, run when we come out of reset
 void init(void) {
+
+	halInit();
+  	chSysInit();
+
 	// set up watchdog
 	wd_init();
 
@@ -262,6 +283,6 @@ int main (void)
 			gcode_parse_char(c);
 		}
 
-		clock();
+		app_clock();
 	}
 }
