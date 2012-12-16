@@ -7,46 +7,25 @@
 /*                                                                            */
 /* ========================================================================== */
 
-#include "sysfuncs.h"
 
-uint8_t SREG;
-
-// enable interrupts
-void enable_irq (void)
+#include "eeprom.h"
+ 
+uint16_t eeprom_read_word (const uint16_t *__p)
 {
-	__asm volatile ("cpsie i");
+	// TODO
 }
 
-// disable interrupts
-void disable_irq (void)
+uint32_t eeprom_read_dword (const uint32_t *__p)
 {
-	__asm volatile ("cpsid i");
+	// TODO
 }
 
-
-#if 0
-	uint8_t save_reg = SREG;
-	cli();
-	CLI_SEI_BUG_MEMORY_BARRIER();
-	
-	
-		MEMORY_BARRIER();
-	SREG = save_reg;
-#endif
-
-
-// disable interrupts etc
-void enter_critical (void)
+void eeprom_write_word (uint16_t *__p, uint16_t __value)
 {
-	disable_irq();
-	//MEMORY_BARRIER()
+	// TODO
 }
 
-// enable interrupts etc
-void leave_critical (void)
+void eeprom_write_dword (uint32_t *__p, uint32_t __value)
 {
-	MEMORY_BARRIER();
-	enable_irq();
+	// TODO
 }
-
-	                                                              

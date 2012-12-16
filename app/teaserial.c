@@ -2,10 +2,21 @@
 #include "ch.h"
 #include "hal.h"
 
+#include "config.h"
+
 #include "pgmspace.h"
 #include "serial.h"
 
-
+// Note: this assumes default settings are 8 data bits, no parity, 1 stop bit
+static const SerialConfig config =
+{
+  BAUD,
+  0,
+  0,
+  0
+};
+ 
+ 
 // initialise serial subsystem
 void serial_init(void)
 {
@@ -13,8 +24,10 @@ void serial_init(void)
    * Activates the serial driver 1 using the driver default configuration.
    */
 	tgt_serial_init();
+
+    //sdObjectInit(&SD1, NULL, notify1);
 	
-  	sdStart(&SD1, NULL);
+  	sdStart(&SD1, &config);
 }
 
 // return number of characters in the receive buffer,

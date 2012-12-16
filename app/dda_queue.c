@@ -40,24 +40,32 @@ DDA movebuffer[MOVEBUFFER_SIZE] __attribute__ ((__section__ (".bss")));
 
 /// check if the queue is completely full
 uint8_t queue_full() {
-	MEMORY_BARRIER();
+	MEMORY_BARRIER(); // todo
+
+#if 0
+	uint8_t h = mb_head + 1;
+	h &= (MOVEBUFFER_SIZE - 1);
+
+	if (h == mb_tail)
+		return 255;
+	else
+		return 0;
+#else
 	if (mb_tail > mb_head) {
 		return ((mb_tail - mb_head - 1) == 0) ? 255 : 0;
 	} else {
 		return ((mb_tail + MOVEBUFFER_SIZE - mb_head - 1) == 0) ? 255 : 0;
 	}
+#endif
 }
 
 /// check if the queue is completely empty
 uint8_t queue_empty() {
-	uint8_t save_reg = SREG;
-	cli();
-	CLI_SEI_BUG_MEMORY_BARRIER();
-	
+	enter_critical();
+
 	uint8_t result = ((mb_tail == mb_head) && (movebuffer[mb_tail].live == 0))?255:0;
 
-	MEMORY_BARRIER();
-	SREG = save_reg;
+	leave_critical();
 
 	return result;
 }
@@ -121,24 +129,20 @@ void enqueue_home(TARGET *t, uint8_t endstop_check, uint8_t endstop_stop_cond) {
 
 	// make certain all writes to global memory
 	// are flushed before modifying mb_head.
-	MEMORY_BARRIER();
+	enter_critical();
 	
 	mb_head = h;
 	
-	uint8_t save_reg = SREG;
-	cli();
-	CLI_SEI_BUG_MEMORY_BARRIER();
-
 	uint8_t isdead = (movebuffer[mb_tail].live == 0);
 	
-	MEMORY_BARRIER();
-	SREG = save_reg;
-	
+	leave_critical();
+		
 	if (isdead) {
 		next_move();
+		
 		// Compensate for the cli() in setTimer().
-		sei();
-	}
+		//! enable_irq();
+	}	
 }
 
 /// go to the next move.
@@ -184,9 +188,7 @@ void queue_flush() {
 	// Since the timer interrupt is disabled before this function
 	// is called it is not strictly necessary to write the variables
 	// inside an interrupt disabled block...
-	uint8_t save_reg = SREG;
-	cli();
-	CLI_SEI_BUG_MEMORY_BARRIER();
+	enter_critical();
 	
 	// flush queue
 	mb_tail = mb_head;
@@ -195,8 +197,7 @@ void queue_flush() {
 	// disable timer
 	setTimer(0);
 	
-	MEMORY_BARRIER();
-	SREG = save_reg;
+	leave_critical();
 }
 
 /// wait for queue to empty

@@ -1,10 +1,12 @@
 # List of all the board related files.
 APPSRC = ${APP}/analog.c \
+       ${APP}/crc.c \
        ${APP}/clock.c \
        ${APP}/dda.c \
        ${APP}/dda_maths.c \
        ${APP}/dda_queue.c \
        ${APP}/delay.c \
+       ${APP}/eeprom.c \
        ${APP}/gcode_parse.c \
        ${APP}/gcode_process.c \
        ${APP}/heater.c \

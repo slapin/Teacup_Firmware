@@ -151,3 +151,9 @@ void SET_INPUT(port_t port_pin)
 		break;
 	}	
 }
+
+//
+void PWM_SET_VALUE (uint8_t channel, uint16_t width)
+{
+	//TODO
+}

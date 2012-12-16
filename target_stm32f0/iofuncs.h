@@ -74,6 +74,9 @@ void SET_OUTPUT(port_t port_pin);
 
 void SET_INPUT(port_t port_pin);
 
+//
+void PWM_SET_VALUE (uint8_t channel, uint16_t width);
+
 // --------------------------------------------------------------------------
 //
 // --------------------------------------------------------------------------

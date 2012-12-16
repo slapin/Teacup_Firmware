@@ -27,8 +27,10 @@ void _delay_loop_2 (uint32_t delay_cycles);
 // microsecond timer, does reset WDT if feature enabled
 // 0 results in no real delay, but the watchdog
 // reset is called if the feature is enabled
+#if 0
 static void delay(uint32_t) __attribute__ ((always_inline));
-inline void delay(uint32_t d) {
+inline void delay(uint32_t d) 
+{
 	if (d > (65536L / (F_CPU / 4000000L))) {
 		_delay(d);
 	}
@@ -40,6 +42,9 @@ inline void delay(uint32_t d) {
 		}
 	}
 }
+#else
+void delay(uint32_t d); 
+#endif
 
 // millisecond timer, does reset WDT if feature enabled
 // 0 results in no real delay, but the watchdog

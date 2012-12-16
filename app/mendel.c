@@ -32,6 +32,7 @@
 #include	"pgmspace.h"
 #include 	"sysfuncs.h"
 
+#include 	"pinio.h"
 #include 	"iofuncs.h"
 /*
 #include	<avr/io.h>
@@ -228,6 +229,9 @@ void init(void) {
 	halInit();
   	chSysInit();
 
+	palSetPadMode(PORT_LED1, PIN_LED1, PAL_MODE_OUTPUT_PUSHPULL);
+	palSetPadMode(PORT_LED2, PIN_LED2, PAL_MODE_OUTPUT_PUSHPULL);
+
 	// set up watchdog
 	wd_init();
 
@@ -257,7 +261,7 @@ void init(void) {
 	temp_init();
 
 	// enable interrupts
-	sei();
+	enable_irq();
 
 	// reset watchdog
 	wd_reset();

@@ -376,7 +376,7 @@ void process_gcode_command() {
 				timer_stop();
 				queue_flush();
 				power_off();
-				cli();
+				disable_irq();
 				for (;;)
 					wd_reset();
 				break;

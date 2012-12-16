@@ -734,47 +734,50 @@
 // Pin defs
 // --------------------------------------------------------------------------
 
-#define PORT_LED1 	GPIOB
-#define PIN_LED1		GPIOB_PIN0  
+// *** Note: pin assignments should be defined in config.h, not here
 
-#define PORT_LED2 	GPIOC
-#define PIN_LED2		GPIOC_LED3  
+#define PORT_LED1 		GPIOC
+#define PIN_LED1		14  
 
+#define PORT_LED2 		GPIOC
+#define PIN_LED2		15  
+
+#if 0
 // X
-#define PORT_X_EN		GPIOC
-#define PIN_X_EN		4
-#define PORT_X_STEP	GPIOC
-#define PIN_X_STEP	4
-#define PORT_X_DIR	GPIOC
-#define PIN_X_DIR		4
+#define PORT_X_EN		GPIOA
+#define PIN_X_EN		0
+#define PORT_X_STEP		GPIOB
+#define PIN_X_STEP		4
+#define PORT_X_DIR		GPIOB
+#define PIN_X_DIR		5
 
 // Y
-#define PORT_Y_EN		GPIOC
-#define PIN_Y_EN		4
-#define PORT_Y_STEP	GPIOC
-#define PIN_Y_STEP	4
-#define PORT_Y_DIR	GPIOC
-#define PIN_Y_DIR		4
+#define PORT_Y_EN		GPIOA
+#define PIN_Y_EN		0
+#define PORT_Y_STEP		GPIOB
+#define PIN_Y_STEP		6
+#define PORT_Y_DIR		GPIOB
+#define PIN_Y_DIR		7
 
 // Z
-#define PORT_Z_EN		GPIOC
-#define PIN_Z_EN		4
-#define PORT_Z_STEP	GPIOC
-#define PIN_Z_STEP	4
-#define PORT_Z_DIR	GPIOC
-#define PIN_Z_DIR		4
+#define PORT_Z_EN		GPIOA
+#define PIN_Z_EN		0
+#define PORT_Z_STEP		GPIOB
+#define PIN_Z_STEP		8
+#define PORT_Z_DIR		GPIOB
+#define PIN_Z_DIR		9
 
 // E0
-#define PORT_E0_EN		GPIOC
-#define PIN_E0_EN			4
-#define PORT_E0_STEP	GPIOC
-#define PIN_E0_STEP		4	
-#define PORT_E0_DIR		GPIOC
-#define PIN_E0_DIR		4
+#define PORT_E0_EN		GPIOA
+#define PIN_E0_EN		0
+#define PORT_E0_STEP	GPIOB
+#define PIN_E0_STEP		10
+#define PORT_E0_DIR		GPIOB
+#define PIN_E0_DIR		11
 
 // E1
-#define PORT_E1_EN		GPIOC
-#define PIN_E1_EN			4
+#define PORT_E1_EN		GPIOC     //
+#define PIN_E1_EN		4
 #define PORT_E1_STEP	GPIOC
 #define PIN_E1_STEP		4
 #define PORT_E1_DIR		GPIOC
@@ -782,28 +785,29 @@
 
 
 // heaters
-#define PORT_BEDHEAT	GPIOC
-#define PIN_BEDHEAT		4
+#define PORT_BEDHEAT	GPIOB
+#define PIN_BEDHEAT		13
 
-#define PORT_HOTEND1	GPIOC
-#define PIN_HOTEND1		4
-#define PORT_HOTEND2	GPIOC
+#define PORT_HOTEND1	GPIOB
+#define PIN_HOTEND1		15
+
+#define PORT_HOTEND2	GPIOC	//
 #define PIN_HOTEND2		4
 
-#define PORT_AUX1	GPIOC
+#define PORT_AUX1		GPIOC 	//
 #define PIN_AUX1		4
-#define PORT_AUX2	GPIOC
+#define PORT_AUX2		GPIOC
 #define PIN_AUX2		4
 
 // 
-#define PORT_TIME_CHECK1	GPIOC
+#define PORT_TIME_CHECK1	GPIOC 	//
 #define PIN_TIME_CHECK1		4
 
 #define PORT_TIME_CHECK2	GPIOC
 #define PIN_TIME_CHECK2		4
 
-//
-#define PORT_X_MIN	GPIOC
+/*
+#define PORT_X_MIN	GPIOC		//
 #define PIN_X_MIN		4
 
 #define PORT_Y_MIN	GPIOC
@@ -820,7 +824,9 @@
 
 #define PORT_Z_MAX	GPIOC
 #define PIN_Z_MAX		4
+*/
 
+#endif
 
 #if !defined(_FROM_ASM_)
 #ifdef __cplusplus

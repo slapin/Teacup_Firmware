@@ -562,7 +562,7 @@ void dda_step(DDA *dda) {
 		// can now be interruptible by other interrupts.
 		// The step interrupt is disabled before entering dda_step() to ensure
 		// that we don't step again while computing the below.
-		sei();
+		enable_irq();
 	#endif
 
 	#ifdef ACCELERATION_REPRAP

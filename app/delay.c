@@ -9,6 +9,22 @@
 //#include	"watchdog.h"
 
 
+#if 1
+void delay(uint32_t d) 
+{
+	if (d > (65536L / (F_CPU / 4000000L))) {
+		_delay(d);
+	}
+	else {
+		wd_reset();
+		if( d ) {
+			_delay_loop_2(d * (F_CPU / 4000000L));
+			wd_reset();
+		}
+	}
+}
+#endif
+
 /// interruptable microsecond delay
 /// does NOT call wd_reset
 /// \param delay time in microseconds
