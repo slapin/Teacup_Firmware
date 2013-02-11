@@ -1,3 +1,6 @@
 [submodule "LUFA"]
 	path = LUFA
 	url = https://github.com/abcminiuser/lufa-lib.git
+[submodule "ChibiOS"]
+	path = ChibiOS
+	url = https://github.com/mabl/ChibiOS.git
