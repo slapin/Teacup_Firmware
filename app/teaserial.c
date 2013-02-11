@@ -10,10 +10,16 @@
 // Note: this assumes default settings are 8 data bits, no parity, 1 stop bit
 static const SerialConfig config =
 {
+#ifdef STM32F0
   BAUD,
   0,
   0,
   0
+#else // LPC1114 
+  BAUD,
+  LCR_WL8 | LCR_STOP1 | LCR_NOPARITY,
+  FCR_TRIGGER0
+#endif  
 };
  
  
@@ -47,8 +53,11 @@ uint8_t serial_rxchars(void)
 uint8_t serial_popchar(void)
 {
 	char c;
+	int num_bytes;
 	
-  	chSequentialStreamRead(&SD1, (uint8_t *)&c, 1);
+  	num_bytes = chSequentialStreamRead(&SD1, (uint8_t *)&c, 1);
+  	if (num_bytes != 1)
+  		c = 0xff;
   
   	return c;
 }
