@@ -21,6 +21,9 @@
 	#include	"sersendf.h"
 #endif
 
+// bit flags for heater config parameter
+#define INVERTED_OUTPUT_FLAG  1
+
 /// \struct heater_definition_t
 /// \brief simply holds pinout data- port, pin, pwm channel if used
 typedef struct {
@@ -30,6 +33,7 @@ typedef struct {
 	port_t   port_pin;
 	uint8_t  channel;
 	uint8_t	 pwm_mode;
+	uint8_t	 config;
 } heater_definition_t;
 
 #undef DEFINE_HEATER
@@ -37,7 +41,7 @@ typedef struct {
 //! #define	DEFINE_HEATER(name, pin, pwm) { &(pin ## _WPORT), pin ## _PIN, \ 
 //!                                         pwm ? (pin ## _PWM) : NULL},
 
-#define	DEFINE_HEATER(name, pin, pwm) { pin, 0, pwm },
+#define	DEFINE_HEATER(name, pin, pwm, config) { pin, 0, pwm, config },
 
 static const heater_definition_t heaters[NUM_HEATERS] =
 {
@@ -272,7 +276,7 @@ void heater_init() {
 	// set all heater pins to output
 	do {
 		#undef	DEFINE_HEATER
-		#define	DEFINE_HEATER(name, pin, pwm) WRITE(pin, 0); SET_OUTPUT(pin);
+		#define	DEFINE_HEATER(name, pin, pwm, config) WRITE(pin, 0); SET_OUTPUT(pin);
 			#include "config.h"
 		#undef DEFINE_HEATER
 	} while (0);
@@ -453,11 +457,14 @@ void heater_set(heater_t index, uint8_t value) {
 	else {
 		if (value >= HEATER_THRESHOLD)
 			//!*(heaters[index].heater_port) |= MASK(heaters[index].heater_pin);
-			WRITE (heaters[index].port_pin, 1);
+			WRITE (heaters[index].port_pin, (heaters[index].config & INVERTED_OUTPUT_FLAG) ? 0 : 1);
 		else
 			//!*(heaters[index].heater_port) &= ~MASK(heaters[index].heater_pin);
-			WRITE (heaters[index].port_pin, 10);
+			WRITE (heaters[index].port_pin, (heaters[index].config & INVERTED_OUTPUT_FLAG) ? 1 : 0);
 	}
+	
+	if (value)
+		power_on();
 }
 
 /** \brief turn off all heaters
