@@ -53,7 +53,7 @@ endif
 PROJECT = target1
 
 # Imported source files
-CHIBIOS = c:/github/chibios/
+CHIBIOS = ../ChibiOS/
 APP = ../app
 
 include board.mk

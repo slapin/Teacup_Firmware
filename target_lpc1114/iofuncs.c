@@ -93,7 +93,7 @@ void WRITE (port_t port_pin, uint8_t val)
 	switch (GET_PORT(port_pin))
 	{
 	case 0: 
-		palWritePad (IOPORT1, GET_PIN(port_pin), val);
+		palWritePad (GPIO0, GET_PIN(port_pin), val);
 		break;
 	case 1:
 		palWritePad (GPIO1, GET_PIN(port_pin), val);
@@ -123,6 +123,41 @@ uint8_t READ (port_t port_pin)
 
 void SET_OUTPUT(port_t port_pin)
 {
+
+	switch (GET_PORT(port_pin))
+	{
+		case 0:
+		{
+			switch (GET_PIN(port_pin))
+			{
+				case 4:
+					LPC_IOCON->PIO0_4 = 0x10;  // select standard IO GPIO
+				break;
+				case 10:
+					LPC_IOCON->SWCLK_PIO0_10 = 0xC1;  // select GPIO no pu
+				break;
+				case 11:
+					LPC_IOCON->R_PIO0_11 = 0xC1;  // select GPIO no pu
+				break;
+			}
+		}
+		break;
+		
+		case 1:
+		{
+			switch (GET_PIN(port_pin))
+			{
+				case 2:
+					LPC_IOCON->R_PIO1_2 = 0xC1;  // select GPIO no pu
+				break;
+				case 3:
+					LPC_IOCON->SWDIO_PIO1_3 = 0xC1;  // select GPIO no pu
+				break;
+			}
+		}
+		break;		
+	}
+	
 	switch (GET_PORT(port_pin))
 	{
 	case 0: 
@@ -151,4 +186,10 @@ void SET_INPUT(port_t port_pin)
 		palSetPadMode (GPIO2, GET_PIN(port_pin), PAL_MODE_INPUT);
 		break;
 	}	
+}
+
+//
+void PWM_SET_VALUE (uint8_t channel, uint16_t width)
+{
+	//TODO
 }

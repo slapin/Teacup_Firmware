@@ -10,7 +10,7 @@
  * Board identifiers.
  */
 #define BOARD_LPC1114
-#define BOARD_NAME "Opendous MicropendousX-1343 with LPC1114"
+#define BOARD_NAME "Gen7-ARM with LPC1114"
 
 /*
  * Board frequencies.
@@ -52,10 +52,12 @@
  * Pin definitions.
  */
  
-#define PORT_LED1 	GPIO0
-#define PIN_LED1 	7
+#define PORT_LED1 	GPIO1
+#define PIN_LED1 	9
  
- 
+//todo
+#define PORT_LED2 		GPIO1
+#define PIN_LED2		9
 
 #if !defined(_FROM_ASM_)
 #ifdef __cplusplus

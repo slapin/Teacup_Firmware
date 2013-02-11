@@ -53,6 +53,10 @@
 #define PORT_B 1
 #define PORT_C 2
 
+#define PIO_0 0
+#define PIO_1 1
+#define PIO_2 2
+
 // --------------------------------------------------------------------------
 // Types
 // --------------------------------------------------------------------------
@@ -73,6 +77,9 @@ uint8_t READ (port_t port_pin);
 void SET_OUTPUT(port_t port_pin);
 
 void SET_INPUT(port_t port_pin);
+
+//
+void PWM_SET_VALUE (uint8_t channel, uint16_t width);
 
 // --------------------------------------------------------------------------
 //

@@ -32,7 +32,9 @@
 /*
  * HAL driver system settings.
  */
-#define LPC11xx_PLLCLK_SOURCE               SYSPLLCLKSEL_SYSOSC
+//#define LPC11xx_PLLCLK_SOURCE               SYSPLLCLKSEL_SYSOSC
+
+#define LPC11xx_PLLCLK_SOURCE               SYSPLLCLKSEL_IRCOSC		// *** Use internal RC clock
 #define LPC11xx_SYSPLL_MUL                  4
 #define LPC11xx_SYSPLL_DIV                  4
 #define LPC11xx_MAINCLK_SOURCE              SYSMAINCLKSEL_PLLOUT
@@ -50,9 +52,9 @@
  * GPT driver system settings.
  */
 #define LPC11xx_GPT_USE_CT16B0              TRUE
-#define LPC11xx_GPT_USE_CT16B1              TRUE
+#define LPC11xx_GPT_USE_CT16B1              FALSE
 #define LPC11xx_GPT_USE_CT32B0              TRUE
-#define LPC11xx_GPT_USE_CT32B1              TRUE
+#define LPC11xx_GPT_USE_CT32B1              FALSE
 #define LPC11xx_GPT_CT16B0_IRQ_PRIORITY     2
 #define LPC11xx_GPT_CT16B1_IRQ_PRIORITY     2
 #define LPC11xx_GPT_CT32B0_IRQ_PRIORITY     2
@@ -73,7 +75,7 @@
 /*
  * SPI driver system settings.
  */
-#define LPC11xx_SPI_USE_SSP0                TRUE
+#define LPC11xx_SPI_USE_SSP0                FALSE
 #define LPC11xx_SPI_USE_SSP1                FALSE
 #define LPC11xx_SPI_SSP0CLKDIV              1
 #define LPC11xx_SPI_SSP1CLKDIV              1
