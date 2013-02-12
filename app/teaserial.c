@@ -10,7 +10,7 @@
 // Note: this assumes default settings are 8 data bits, no parity, 1 stop bit
 static const SerialConfig config =
 {
-#ifdef STM32F0
+#if defined (STM32F0XX)
   BAUD,
   0,
   0,

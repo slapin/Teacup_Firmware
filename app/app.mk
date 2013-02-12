@@ -1,6 +1,5 @@
 # List of all the board related files.
-APPSRC = ${APP}/analog.c \
-       ${APP}/crc.c \
+APPSRC = ${APP}/crc.c \
        ${APP}/clock.c \
        ${APP}/dda.c \
        ${APP}/dda_maths.c \
