@@ -52,7 +52,9 @@ GPTConfig gpt1cfg = {1000000,  // 1MHz clock?
 /// step timer
 static void timer1_Handler(GPTDriver *gptp)
 {   
+#if defined(PORT_LED1) && defined(PIN_LED1)
     palTogglePad(PORT_LED1, PIN_LED1);
+#endif
 	//   
    	
    	queue_step();
@@ -63,7 +65,9 @@ static void timer1_Handler(GPTDriver *gptp)
 /// system tick handler
 static void timer3_Handler(GPTDriver *gptp)
 {   
+#if defined(PORT_LED2) && defined(PIN_LED2)
     palTogglePad(PORT_LED2, PIN_LED2);
+#endif
    
 	/*
 	clock stuff

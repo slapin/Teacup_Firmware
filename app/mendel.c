@@ -229,8 +229,12 @@ void init(void) {
 	halInit();
   	chSysInit();
 
+#if defined(PORT_LED1) && defined(PIN_LED1)
 	palSetPadMode(PORT_LED1, PIN_LED1, PAL_MODE_OUTPUT_PUSHPULL);
+#endif
+#if defined(PORT_LED2) && defined(PIN_LED2)
 	palSetPadMode(PORT_LED2, PIN_LED2, PAL_MODE_OUTPUT_PUSHPULL);
+#endif
 
 	// set up watchdog
 	wd_init();
