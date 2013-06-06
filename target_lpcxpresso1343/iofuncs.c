@@ -101,6 +101,9 @@ void WRITE (port_t port_pin, uint8_t val)
 	case 2:
 		palWritePad (GPIO2, GET_PIN(port_pin), val);
 		break;
+	case 3:
+		palWritePad (GPIO3, GET_PIN(port_pin), val);
+		break;
 	}	
 }
 
@@ -116,6 +119,9 @@ uint8_t READ (port_t port_pin)
 		break;
 	case 2:
 		return palReadPad (GPIO2, GET_PIN(port_pin));
+		break;
+	case 3:
+		return palReadPad (GPIO3, GET_PIN(port_pin));
 		break;
 	}	
 	return 0;
@@ -169,6 +175,9 @@ void SET_OUTPUT(port_t port_pin)
 	case 2:
 		palSetPadMode (GPIO2, GET_PIN(port_pin), PAL_MODE_OUTPUT_PUSHPULL);
 		break;
+	case 3:
+		palSetPadMode (GPIO3, GET_PIN(port_pin), PAL_MODE_OUTPUT_PUSHPULL);
+		break;
 	}	
 }
 
@@ -184,6 +193,9 @@ void SET_INPUT(port_t port_pin)
 		break;
 	case 2:
 		palSetPadMode (GPIO2, GET_PIN(port_pin), PAL_MODE_INPUT);
+		break;
+	case 3:
+		palSetPadMode (GPIO3, GET_PIN(port_pin), PAL_MODE_INPUT);
 		break;
 	}	
 }
