@@ -88,6 +88,38 @@ void io_init(void) {
 	// X Stepper
 	WRITE(X_STEP_PIN, 0);	SET_OUTPUT(X_STEP_PIN);
 	WRITE(X_DIR_PIN,  0);	SET_OUTPUT(X_DIR_PIN);
+#ifdef X_I01_PIN
+	WRITE(X_I01_PIN, 1);
+	SET_OUTPUT(X_I01_PIN);
+#endif
+#ifdef X_I11_PIN
+	WRITE(X_I11_PIN, 1);
+	SET_OUTPUT(X_I11_PIN);
+#endif
+#ifdef X_I02_PIN
+	WRITE(X_I02_PIN, 1);
+	SET_OUTPUT(X_I02_PIN);
+#endif
+#ifdef X_I12_PIN
+	WRITE(X_I12_PIN, 1);
+	SET_OUTPUT(X_I12_PIN);
+#endif
+#ifdef Y_I01_PIN
+	WRITE(Y_I01_PIN, 1);
+	SET_OUTPUT(Y_I01_PIN);
+#endif
+#ifdef Y_I11_PIN
+	WRITE(Y_I11_PIN, 1);
+	SET_OUTPUT(Y_I11_PIN);
+#endif
+#ifdef Y_I02_PIN
+	WRITE(Y_I02_PIN, 1);
+	SET_OUTPUT(Y_I02_PIN);
+#endif
+#ifdef Y_I12_PIN
+	WRITE(Y_I12_PIN, 1);
+	SET_OUTPUT(Y_I12_PIN);
+#endif
 	#ifdef X_MIN_PIN
 		SET_INPUT(X_MIN_PIN);
 		#ifdef USE_INTERNAL_PULLUPS

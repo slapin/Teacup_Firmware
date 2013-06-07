@@ -27,6 +27,9 @@
 #include	"clock.h"
 #include	"config.h"
 #include	"home.h"
+#define DO_X_STEP_DEFINED
+#define DO_Y_STEP_DEFINED
+#include	"graycode.c"
 
 /// the current tool
 uint8_t tool;

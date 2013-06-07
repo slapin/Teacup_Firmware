@@ -7,11 +7,67 @@
 	By default, X Y and Z are graycode, while E remains step/dir. If this isn't what
 	you want, edit the lines just below.
 */
-// #define X_GREYCODE
-// #define Y_GREYCODE
-// #define Z_GREYCODE
-//#define E_GREYCODE
+#undef X_GREYCODE
+#undef Y_GREYCODE
+#undef Z_GREYCODE
+#undef E_GREYCODE
 
+#define X_COILPOL
+#define Y_COILPOL
+
+/*
+* Full step:
+* PHa PHb I0a I1a I0b I1b
+* 1    1  0   0   0   0
+* 1    1  0   0   1   1
+* 1    0  0   0   0   0
+* 1    0  1   1   0   0
+* 0    0  0   0   0   0
+* 0    0  0   0   1   1
+* 0    1  0   0   0   0
+* 0    1  1   1   0   0
+*/
+
+#if defined(X_COILPOL) || defined(Y_COILPOL)
+#ifndef TRUTABLE_DEFINED
+#define TRUTABLE_DEFINED
+static const int trutable[][6] = {
+	{1, 1, 1, 1, 1, 0},
+	{1, 1, 1, 0, 1, 0},
+	{1, 1, 1, 0, 1, 1},
+	{1, 0, 1, 0, 1, 0},
+	{0, 0, 1, 1, 1, 0},
+	{0, 0, 1, 0, 1, 0},
+	{0, 0, 1, 0, 1, 1},
+	{0, 1, 1, 0, 1, 0},
+};
+#if 0
+static int trutable[][6] = {
+	{1, 1, 0, 0, 0, 0},
+	{1, 1, 0, 0, 1, 1},
+	{1, 0, 0, 0, 0, 0},
+	{1, 0, 1, 1, 0, 0},
+	{0, 0, 0, 0, 0, 0},
+	{0, 0, 0, 0, 1, 1},
+	{1, 0, 0, 0, 0, 0},
+	{0, 1, 1, 1, 0, 0},
+};
+#endif
+#if 0
+static int trutable[][6] = {
+	{0, 0, 0, 0, 0, 0},
+	{0, 0, 0, 0, 1, 1},
+	{1, 0, 0, 0, 0, 0},
+	{1, 0, 1, 1, 0, 0},
+	{1, 1, 0, 0, 0, 0},
+	{1, 1, 0, 0, 1, 1},
+	{0, 1, 0, 0, 0, 0},
+	{0, 1, 1, 1, 0, 0},
+};
+#endif
+#define TRUTABLE_SIZE (sizeof(trutable)/sizeof(trutable[0]))
+#endif
+#endif
 
 /*
 	X Stepper
@@ -30,6 +86,58 @@
 	int8_t stored_x_direction;
 	int8_t x_greycode;
 #endif
+#ifdef X_COILPOL
+#undef x_step
+#undef _x_step
+#undef x_direction
+#define x_step() do_x_step()
+#define x_direction(dir) stored_x_direction=(dir)?1:-1
+#define _x_step(st)                    
+#undef x_disable
+#undef x_enable
+#define x_enable() do_x_enable()
+#define x_disable() do_x_disable()
+#ifndef DO_X_STEP_DEFINED
+#define DO_X_STEP_DEFINED
+int stored_x_direction;
+int stored_x_index;
+void do_x_step(void)
+{
+	stored_x_index += stored_x_direction;
+	if (stored_x_index < 0)
+		stored_x_index = TRUTABLE_SIZE - 1;
+	if (stored_x_index >= (int)TRUTABLE_SIZE)
+		stored_x_index = 0;
+	WRITE(X_STEP_PIN, trutable[stored_x_index][0]); /* PH1 */
+	WRITE(X_DIR_PIN, trutable[stored_x_index][1]); /* PH2 */
+	WRITE(X_I01_PIN, trutable[stored_x_index][2]); /* I01 */
+	WRITE(X_I11_PIN, trutable[stored_x_index][3]); /* I11 */
+	WRITE(X_I02_PIN, trutable[stored_x_index][4]); /* I02 */
+	WRITE(X_I12_PIN, trutable[stored_x_index][5]); /* I12 */
+}
+void do_x_disable(void)
+{
+	WRITE(X_STEP_PIN, 0); /* PH1 */
+	WRITE(X_DIR_PIN, 1); /* PH2 */
+	WRITE(X_I01_PIN, 0); /* I01 */
+	WRITE(X_I11_PIN, 1); /* I11 */
+	WRITE(X_I02_PIN, 0); /* I02 */
+	WRITE(X_I12_PIN, 1); /* I12 */
+}
+void do_x_enable(void)
+{
+	WRITE(X_STEP_PIN, trutable[stored_x_index][0]); /* PH1 */
+	WRITE(X_DIR_PIN, trutable[stored_x_index][1]); /* PH2 */
+	WRITE(X_I01_PIN, trutable[stored_x_index][2]); /* I01 */
+	WRITE(X_I11_PIN, trutable[stored_x_index][3]); /* I11 */
+	WRITE(X_I02_PIN, trutable[stored_x_index][4]); /* I02 */
+	WRITE(X_I12_PIN, trutable[stored_x_index][5]); /* I12 */
+}
+
+
+#endif
+#endif
+
 
 /*
 	Y Stepper
@@ -48,6 +156,57 @@
 	#define y_direction(dir)                stored_y_direction=(dir)?1:-1
 	int8_t stored_y_direction;
 	int8_t y_greycode;
+#endif
+#ifdef Y_COILPOL
+#undef y_step
+#undef _y_step
+#undef y_direction
+#define y_step() do_y_step()
+#define y_direction(dir) stored_y_direction=(dir)?1:-1
+#define _y_step(st)                    
+#undef y_disable
+#undef y_enable
+#define y_enable() do_y_enable()
+#define y_disable() do_y_disable()
+#ifndef DO_Y_STEP_DEFINED
+#define DO_Y_STEP_DEFINED
+int stored_y_direction;
+int stored_y_index;
+void do_y_step(void)
+{
+	stored_y_index += stored_y_direction;
+	if (stored_y_index < 0)
+		stored_y_index = TRUTABLE_SIZE - 1;
+	if (stored_y_index >= (int)TRUTABLE_SIZE)
+		stored_y_index = 0;
+	WRITE(Y_STEP_PIN, trutable[stored_y_index][0]); /* PH1 */
+	WRITE(Y_DIR_PIN, trutable[stored_y_index][1]); /* PH2 */
+	WRITE(Y_I01_PIN, trutable[stored_y_index][2]); /* I01 */
+	WRITE(Y_I11_PIN, trutable[stored_y_index][3]); /* I11 */
+	WRITE(Y_I02_PIN, trutable[stored_y_index][4]); /* I02 */
+	WRITE(Y_I12_PIN, trutable[stored_y_index][5]); /* I12 */
+}
+void do_y_disable(void)
+{
+	WRITE(Y_STEP_PIN, 0); /* PH1 */
+	WRITE(Y_DIR_PIN, 1); /* PH2 */
+	WRITE(Y_I01_PIN, 0); /* I01 */
+	WRITE(Y_I11_PIN, 1); /* I11 */
+	WRITE(Y_I02_PIN, 0); /* I02 */
+	WRITE(Y_I12_PIN, 1); /* I12 */
+}
+void do_y_enable(void)
+{
+	WRITE(Y_STEP_PIN, trutable[stored_y_index][0]); /* PH1 */
+	WRITE(Y_DIR_PIN, trutable[stored_y_index][1]); /* PH2 */
+	WRITE(Y_I01_PIN, trutable[stored_y_index][2]); /* I01 */
+	WRITE(Y_I11_PIN, trutable[stored_y_index][3]); /* I11 */
+	WRITE(Y_I02_PIN, trutable[stored_y_index][4]); /* I02 */
+	WRITE(Y_I12_PIN, trutable[stored_y_index][5]); /* I12 */
+}
+
+
+#endif
 #endif
 
 /*

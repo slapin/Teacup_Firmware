@@ -21,7 +21,7 @@
 #include	"sersendf.h"
 #include	"pinio.h"
 #include	"config.h"
-//#include "graycode.c"
+#include "graycode.c"
 
 #ifdef	DC_EXTRUDER
 	#include	"heater.h"
