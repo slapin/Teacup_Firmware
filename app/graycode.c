@@ -31,6 +31,8 @@
 #if defined(X_COILPOL) || defined(Y_COILPOL)
 #ifndef TRUTABLE_DEFINED
 #define TRUTABLE_DEFINED
+#if 0
+/* Half step */
 static const int trutable[][6] = {
 	{1, 1, 1, 1, 1, 0},
 	{1, 1, 1, 0, 1, 0},
@@ -40,6 +42,18 @@ static const int trutable[][6] = {
 	{0, 0, 1, 0, 1, 0},
 	{0, 0, 1, 0, 1, 1},
 	{0, 1, 1, 0, 1, 0},
+};
+#endif
+/* Modified half step */
+static const int trutable[][6] = {
+	{1, 1, 0, 0, 1, 1},
+	{1, 1, 1, 0, 1, 0},
+	{0, 1, 1, 1, 0, 0},
+	{0, 1, 1, 0, 1, 0},
+	{0, 0, 0, 0, 1, 1},
+	{0, 0, 1, 0, 1, 0},
+	{1, 0, 1, 1, 0, 0},
+	{1, 0, 1, 0, 1, 0},
 };
 #if 0
 static int trutable[][6] = {

@@ -77,14 +77,14 @@
 */
 
 /// used for G0 rapid moves and as a cap for all other feedrates
-#define	MAXIMUM_FEEDRATE_X		600
-#define	MAXIMUM_FEEDRATE_Y		24000
+#define	MAXIMUM_FEEDRATE_X		500
+#define	MAXIMUM_FEEDRATE_Y		500
 #define	MAXIMUM_FEEDRATE_Z		24000
 #define	MAXIMUM_FEEDRATE_E		24000
 
 /// used when searching endstops and as default feedrate
 #define	SEARCH_FEEDRATE_X			100 /* 900 */
-#define	SEARCH_FEEDRATE_Y			900 /*900 */
+#define	SEARCH_FEEDRATE_Y			100 /*900 */
 #define	SEARCH_FEEDRATE_Z			60 /* 60 */
 // no SEARCH_FEEDRATE_E, as E can't be searched
 
@@ -146,7 +146,7 @@
 	how fast to accelerate when using ACCELERATION_RAMPING.
 		given in mm/s^2, decimal allowed, useful range 1. to 10'000. Start with 10. for milling (high precision) or 1000. for printing
 */
-#define ACCELERATION 10.
+#define ACCELERATION 1.0
 
 /** \def ACCELERATION_TEMPORAL
 	temporal step algorithm
@@ -219,12 +219,12 @@
 //#define	X_INVERT_MAX
 //#define	X_INVERT_ENABLE
 
-#define	Y_STEP_PIN						PIN_DEF (PIO_1, 8)
-#define	Y_DIR_PIN						PIN_DEF (PIO_0, 6)
-#define Y_I01_PIN						PIN_DEF (PIO_0, 10) /* I01 */
-#define Y_I11_PIN						PIN_DEF (PIO_3, 0) /* I11 */
-#define Y_I02_PIN						PIN_DEF (PIO_3, 1) /* I02 */
-#define Y_I12_PIN						PIN_DEF (PIO_3, 2) /* I12 */
+#define	Y_STEP_PIN						PIN_DEF (PIO_1, 5)
+#define	Y_DIR_PIN						PIN_DEF (PIO_1, 8)
+#define Y_I01_PIN						PIN_DEF (PIO_0, 6) /* I01 */
+#define Y_I11_PIN						PIN_DEF (PIO_0, 10) /* I11 */
+#define Y_I02_PIN						PIN_DEF (PIO_3, 0) /* I02 */
+#define Y_I12_PIN						PIN_DEF (PIO_3, 1) /* I12 */
 //#define	Y_MIN_PIN							PIN_DEF (PIO_0, 8)
 //#define	Y_MAX_PIN							PIN_DEF (PIO_0, 8)
 //#define	Y_ENABLE_PIN					xxxx
