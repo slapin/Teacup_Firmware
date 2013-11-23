@@ -9,6 +9,7 @@
 #include	"delay.h"
 #include	"pinio.h"
 #include	"gcode_parse.h"
+#include 	"iofuncs.h"
 
 /// home all 3 axes
 void home() {
