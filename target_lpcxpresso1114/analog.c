@@ -33,12 +33,15 @@ void analog_init(void)
   LPC_SYSCON->SYSAHBCLKCTRL |= (1<<13);
 
   /*  Bit 7 needs to be cleared according to design team. */
-  
+  /* Damn pin configuration :( */
+  LPC_IOCON->R_PIO0_11 &= ~0x8F;
+  LPC_IOCON->R_PIO0_11 |= 0x02; /* ADC IN 0 */
   LPC_IOCON->R_PIO1_0  &= ~0x8F;	
   LPC_IOCON->R_PIO1_0  |= 0x02;  /* ADC IN1 */
   LPC_IOCON->R_PIO1_1  &= ~0x8F;	
   LPC_IOCON->R_PIO1_1  |= 0x02;  /* ADC IN2 */
   
+  LPC_IOCON->R_PIO0_11   = 0x02;	// Select AD0 pin function
   LPC_IOCON->R_PIO1_0    = 0x02;	// Select AD1 pin function
   LPC_IOCON->R_PIO1_1    = 0x02;	// Select AD2 pin function
 
@@ -57,9 +60,9 @@ uint16_t	analog_read(uint8_t channelNum)
 {
   uint32_t regVal, ADC_Data;
 	
-  // Index 0 -> AD1
-  // Index 1 -> AD2
-  channelNum = channelNum + 1;
+  // Index 0 -> AD0
+  // Index 1 -> AD1
+  channelNum = channelNum;
 	
   LPC_ADC->CR &= 0xFFFFFF00;
   LPC_ADC->CR |= (1 << 24) | (1 << channelNum);

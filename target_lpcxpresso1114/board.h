@@ -25,21 +25,21 @@
 /*
  * GPIO 0 initial setup.
  */
-#define VAL_GPIO0DIR			0x00000000            
+#define VAL_GPIO0DIR			(0x00000000 | (1 << 7))
                                 
 #define VAL_GPIO0DATA			0x00000000           
 
 /*
  * GPIO 1 initial setup.
  */
-#define VAL_GPIO1DIR			0x00000000            
+#define VAL_GPIO1DIR			(0x00000000  | (1 << 4))
                                 
 #define VAL_GPIO1DATA			0x00000000           
 
 /*
  * GPIO 2 initial setup.
  */
-#define VAL_GPIO2DIR            0x00000000
+#define VAL_GPIO2DIR            0x00000001
 #define VAL_GPIO2DATA           0x00000000
 
 /*
@@ -52,12 +52,17 @@
  * Pin definitions.
  */
  
-#define PORT_LED1 	GPIO1
-#define PIN_LED1 	9
+#if 0
+// conflict with bed
+#define PORT_LED1 	GPIO0
+#define PIN_LED1 	7
+#endif
  
 //todo
+#if 0
 #define PORT_LED2 		GPIO1
 #define PIN_LED2		9
+#endif
 
 #if !defined(_FROM_ASM_)
 #ifdef __cplusplus

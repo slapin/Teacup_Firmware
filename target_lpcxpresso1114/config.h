@@ -77,10 +77,10 @@
 */
 
 /// used for G0 rapid moves and as a cap for all other feedrates
-#define	MAXIMUM_FEEDRATE_X		24000
-#define	MAXIMUM_FEEDRATE_Y		24000
-#define	MAXIMUM_FEEDRATE_Z		24000
-#define	MAXIMUM_FEEDRATE_E		24000
+#define	MAXIMUM_FEEDRATE_X		1000
+#define	MAXIMUM_FEEDRATE_Y		1000
+#define	MAXIMUM_FEEDRATE_Z		200
+#define	MAXIMUM_FEEDRATE_E		100
 
 /// used when searching endstops and as default feedrate
 #define	SEARCH_FEEDRATE_X			900
@@ -147,6 +147,7 @@
 		given in mm/s^2, decimal allowed, useful range 1. to 10'000. Start with 10. for milling (high precision) or 1000. for printing
 */
 #define ACCELERATION 750.
+//#define ACCELERATION 75.
 
 /** \def ACCELERATION_TEMPORAL
 	temporal step algorithm
@@ -195,17 +196,40 @@
 */
 
 
+/* PINS *
+ * PIO0_7 - bed/led
+ * PIO0_10
+ * PIO0_11 - ADC0
+ * PIO1_0 - ADC1
+ * PIO1_4 - fan
+ * PIO1_5
+ * PIO1_8
+ * PIO1_9
+ * PIO1_10
+ * PIO1_11
+ * PIO2_0 - extruder
+ * PIO2_1
+ * PIO2_2
+ * PIO2_3
+ * PIO2_4
+ * PIO2_5 --
+ * PIO2_9
+ * PIO2_10
+ * PIO3_0
+ * PIO3_1
+ * PIO3_2
+ */
 
 
 #define	X_STEP_PIN						PIN_DEF (PIO_1, 9)
 #define	X_DIR_PIN							PIN_DEF (PIO_1, 10)
-#define	X_MIN_PIN							PIN_DEF (PIO_2, 7)
+#define	X_MIN_PIN							PIN_DEF (PIO_3, 1)
 //#define	X_MAX_PIN							xxxx
 #define	X_ENABLE_PIN						PIN_DEF (PIO_3, 2)
-//#define	X_INVERT_DIR
-//#define	X_INVERT_MIN
+#define	X_INVERT_DIR
+#define	X_INVERT_MIN
 //#define	X_INVERT_MAX
-//#define	X_INVERT_ENABLE
+#define	X_INVERT_ENABLE
 
 #define	Y_STEP_PIN						PIN_DEF (PIO_2, 3)
 #define	Y_DIR_PIN							PIN_DEF (PIO_2, 4)
@@ -214,24 +238,24 @@
 #define	Y_ENABLE_PIN							PIN_DEF (PIO_1, 11)
 //#define	Y_INVERT_DIR
 //#define	Y_INVERT_MIN
-//#define	Y_INVERT_MAX
-//#define	Y_INVERT_ENABLE
+#define	Y_INVERT_MAX
+#define	Y_INVERT_ENABLE
 
 #define	Z_STEP_PIN						PIN_DEF (PIO_2, 10)
 #define	Z_DIR_PIN						PIN_DEF (PIO_2, 9)
-#define	Z_MIN_PIN						PIN_DEF (PIO_0, 9)
+#define	Z_MIN_PIN						PIN_DEF (PIO_1, 8)
 //#define	Z_MAX_PIN						PIN_DEF (PIO_X, x)
 #define	Z_ENABLE_PIN						PIN_DEF (PIO_2, 2)
 //#define	Z_INVERT_DIR
-//#define	Z_INVERT_MIN
+#define	Z_INVERT_MIN
 //#define	Z_INVERT_MAX
-//#define	Z_INVERT_ENABLE
+#define	Z_INVERT_ENABLE
 
 #define	E_STEP_PIN						PIN_DEF (PIO_0, 10)
 #define	E_DIR_PIN							PIN_DEF (PIO_3, 0)
-#define E_ENABLE_PIN						PIN_DEF (PIO_2, 2)
+#define E_ENABLE_PIN						PIN_DEF (PIO_2, 1)
 //#define	E_INVERT_DIR
-//#define	E_INVERT_ENABLE
+#define	E_INVERT_ENABLE
 /* E1 data
  *
  *
@@ -363,9 +387,9 @@ DEFINE_TEMP_SENSOR(extruder,  TT_THERMISTOR,  PIN_ADC2,      THERMISTOR_EXTRUDER
 #endif
 
 //            name      port_pin              pwm   config flags (1 = inverted)
-DEFINE_HEATER(extruder, PIN_DEF(PIO_2, 0),   0,    1)
-DEFINE_HEATER(bed,      PIN_DEF(PIO_0, 7),   0,    1)
-DEFINE_HEATER(fan,      PIN_DEF(PIO_1, 4), 0, 1)
+DEFINE_HEATER(extruder, PIN_DEF(PIO_2, 0),   0,    0)
+DEFINE_HEATER(bed,      PIN_DEF(PIO_0, 7),   0,    0)
+DEFINE_HEATER(fan,      PIN_DEF(PIO_1, 4), 0, 0)
 // DEFINE_HEATER(chamber,  PIND7, 1)
 // DEFINE_HEATER(motor,    PIND6, 1)
 

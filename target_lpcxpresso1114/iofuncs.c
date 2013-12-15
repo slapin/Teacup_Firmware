@@ -139,6 +139,9 @@ void SET_OUTPUT(port_t port_pin)
 				case 4:
 					LPC_IOCON->PIO0_4 = 0x10;  // select standard IO GPIO
 				break;
+				case 7:
+					LPC_IOCON->PIO0_7 = 0xC0;
+					break;
 				case 10:
 					LPC_IOCON->SWCLK_PIO0_10 = 0xC1;  // select GPIO no pu
 				break;
@@ -159,9 +162,19 @@ void SET_OUTPUT(port_t port_pin)
 				case 3:
 					LPC_IOCON->SWDIO_PIO1_3 = 0xC1;  // select GPIO no pu
 				break;
+				case 4:
+					LPC_IOCON->PIO1_4 = 0xC0;
+					break;
 			}
 		}
 		break;		
+		case 2:
+			switch (GET_PIN(port_pin)) {
+			case 0:
+				LPC_IOCON->PIO2_0 = 0xC0;
+				break;
+			}
+
 	}
 	
 	switch (GET_PORT(port_pin))
@@ -183,6 +196,25 @@ void SET_OUTPUT(port_t port_pin)
 
 void SET_INPUT(port_t port_pin)
 {
+	switch (GET_PORT(port_pin))
+	{
+	case 1:
+		switch (GET_PIN(port_pin)) {
+		case 5:
+			LPC_IOCON->PIO1_5 = 0xC0;
+			break;
+		case 8:
+			LPC_IOCON->PIO1_8 = 0xC0;
+			break;
+		}
+	case 3:
+		switch (GET_PIN(port_pin)) {
+		case 1:
+			LPC_IOCON->PIO3_1 = 0xC0;
+			break;
+		}
+	}
+
 	switch (GET_PORT(port_pin))
 	{
 	case 0: 

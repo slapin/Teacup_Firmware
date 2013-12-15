@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MENDEL_DEV=/dev/arduino
+MENDEL_DEV=/dev/ttyUSB2
 
 #
 # this file is designed to be sourced into your current shell like this:

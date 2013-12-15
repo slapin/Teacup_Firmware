@@ -12,8 +12,8 @@
 #undef Z_GREYCODE
 #undef E_GREYCODE
 
-#define X_COILPOL
-#define Y_COILPOL
+#undef X_COILPOL
+#undef Y_COILPOL
 
 /*
 * Full step:

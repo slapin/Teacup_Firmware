@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DEV=/dev/arduino
+DEV=/dev/ttyUSB2
 BAUD=115200
 
 waitfor avrdude
